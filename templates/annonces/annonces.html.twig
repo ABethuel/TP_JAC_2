@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<section class="articles">
+    {% for annonce in annonces %}
+        <article>
+            <br>
+            <h2>{{ annonce.title }}</h2>
+            <div class="metadata" >Posté le {{ annonce.date | date("d/m/Y")}}</div>
+            <div class="metadata" >Catégorie : {{ annonce.category }}</div>
+            <div>
+                <img src="{{ annonce.image }}" alt="">
+                <p>{{ annonce.content }}</p>
+                <a href="{{ path('show', {'id': annonce.id}) }}" class="btn btn-primary">Voir l'annonce</a>
+            </div>
+        </article>
+        <br>
+        <br>
+    {% endfor %}
+</section>
+
+{% endblock %}

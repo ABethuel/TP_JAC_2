@@ -1,0 +1,18 @@
+{% extends 'base.html.twig'%}
+
+{% block body %}
+
+    <article>
+        <br>
+        <h2>{{ annonce.title }}</h2>
+        <div class="metadata" >Posté le {{ annonce.date | date("d/m/Y")}}</div>
+        <div class="metadata" >Catégorie : {{ annonce.category }}</div>
+        <div>
+            <img src="{{ annonce.image }}" alt="">
+            <p>{{ annonce.content }}</p>
+        </div>
+    </article>
+    <br>
+    <br>
+
+{% endblock %}
