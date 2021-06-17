@@ -89,7 +89,7 @@ class AnnoncesController extends AbstractController
         $manager->remove($annonce);
         $manager->flush();
 
-        return $this->render('annonces/delete.html.twig', [
+        return $this->redirectToRoute("annonces", [
             'annonce'=> $annonce
         ]);
     }
