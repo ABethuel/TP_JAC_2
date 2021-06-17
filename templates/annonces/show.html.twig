@@ -9,7 +9,10 @@
         <div class="metadata" >Catégorie : {{ annonce.category }}</div>
         <div>
             <img src="{{ annonce.image }}" alt="">
+            <br>
             <p>{{ annonce.content }}</p>
+            <a href="{{ path('edit_announce', {'id': annonce.id}) }}" class="btn btn-primary">Modifier l'annonce</a>
+            <a href="{{ path('delete', {'id': annonce.id}) }}" class="btn btn-primary">Supprimer l'annonce</a>
         </div>
     </article>
     <br>

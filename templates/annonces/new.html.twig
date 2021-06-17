@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% form_theme formAnnonce 'bootstrap_4_layout.html.twig' %}
+
+
+{% block body %}
+
+    <br>
+    <br>
+    
+    <h1>
+        {% if editMode %}
+            Modifier une annonce
+        {% else %}
+            Ajouter une annonce
+        {% endif %}
+    </h1>
+
+    {{ form_start(formAnnonce) }}
+
+    {{ form_row(formAnnonce.title, {'attr' : {'placeholder': "Titre de l'article"}}) }}
+    {{ form_row(formAnnonce.content, {'attr' : {'placeholder': "Contenu de l'article"}}) }}
+    {{ form_row(formAnnonce.image, {'attr' : {'placeholder': "Image de l'article"}}) }}
+    {{ form_row(formAnnonce.category, {'attr' : {'placeholder': "Catégorie de l'article"}}) }}
+
+    <br>
+    <br>
+
+    <button type="submit" class="btn btn-success">
+        {% if editMode %}
+            Enregistrer les modifications
+        {% else %}
+            Ajouter l'article
+        {% endif %}
+    </button>
+    {{ form_end(formAnnonce) }}
+
+{% endblock %}
