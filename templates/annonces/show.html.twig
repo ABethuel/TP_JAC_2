@@ -6,7 +6,7 @@
         <br>
         <h2>{{ annonce.title }}</h2>
         <div class="metadata" >Posté le {{ annonce.date | date("d/m/Y")}}</div>
-        <div class="metadata" >Catégorie : {{ annonce.category }}</div>
+        <div class="metadata" >Catégorie : {{ annonce.type.title }}</div>
         <div>
             <img src="{{ annonce.image }}" alt="">
             <br>
@@ -17,5 +17,21 @@
     </article>
     <br>
     <br>
+
+    <section id="commentaires">
+        {% for comment in annonce.comments %}
+        <div class="comment">
+            <div class="row">
+                <div class="col-3">
+                    {{  comment.author }} (<small>{{ comment.createdAt | date('d/m/Y à H:i') }}</small>)
+                </div>
+                <div class="col">
+                    {{ comment.content  | raw }}
+                </div>
+            </div>
+            <br>
+        </div>
+        {% endfor %}
+    </section>
 
 {% endblock %}
