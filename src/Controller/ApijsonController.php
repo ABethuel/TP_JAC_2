@@ -41,7 +41,8 @@ class ApijsonController extends AbstractController
      * @param ValidatorInterface $validator
      * @return JsonResponse
      */
-    public function create(Request $request, SerializerInterface $serializer, EntityManagerInterface $manager, ValidatorInterface $validator){
+    public function create(Request $request, SerializerInterface $serializer, EntityManagerInterface $manager, ValidatorInterface $validator): JsonResponse
+    {
         $jsonGet = $request->getContent();
 
         try {
@@ -58,6 +59,7 @@ class ApijsonController extends AbstractController
             $manager->flush();
 
             return $this->json($annonce, 201, []);
+
         } catch (NotEncodableValueException $e){
             return $this->json([
                 'status' => 400,

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AnnonceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -48,6 +50,22 @@ class Annonce
      * @Assert\NotBlank(message="Veuillez saisir une catégorie")
      */
     private $category;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Type::class, inversedBy="annonce")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $type;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="annonce", orphanRemoval=true)
+     */
+    private $comments;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -113,4 +131,48 @@ class Annonce
 
         return $this;
     }
+
+    public function getType(): ?Type
+    {
+        return $this->type;
+    }
+
+    public function setType(?Type $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setAnnonce($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getAnnonce() === $this) {
+                $comment->setAnnonce(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }
