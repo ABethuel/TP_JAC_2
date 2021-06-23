@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 /**
@@ -18,36 +19,42 @@ class Annonce
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"show_post"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez saisir un titre")
+     * @Groups({"show_post"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank(message="Veuillez saisir un contenu")
+     * @Groups({"show_post"})
      */
     private $content;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez saisir une image")
+     * @Groups({"show_post"})
      */
     private $image;
 
     /**
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank
+     * @Groups({"show_post"})
      */
     private $date;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez saisir une catégorie")
+     * @Groups({"show_post"})
      */
     private $category;
 
@@ -60,7 +67,7 @@ class Annonce
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="annonce", orphanRemoval=true)
      */
-    private $comments;
+     private $comments;
 
     public function __construct()
     {

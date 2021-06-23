@@ -21,15 +21,12 @@ class ApijsonController extends AbstractController
     /**
      * @Route("/json", name="json", methods={"GET"})
      * @param AnnonceRepository $annonceRepository
-     * @param SerializerInterface $serializer
      * @return Response
      */
-    public function index(AnnonceRepository $annonceRepository, SerializerInterface $serializer): Response
+    public function index(AnnonceRepository $annonceRepository): Response
     {
         $annonce = $annonceRepository->findAll();
-        $json = $serializer->serialize($annonce, 'json');
-
-        return new JsonResponse($json, 200, [], true);
+        return $this->json($annonce, 200, [], ['groups' => 'show_post']);
     }
 
 
@@ -58,7 +55,7 @@ class ApijsonController extends AbstractController
             $manager->persist($annonce);
             $manager->flush();
 
-            return $this->json($annonce, 201, []);
+            return $this->json($annonce, 201, [], ['groups' => 'show_post']);
 
         } catch (NotEncodableValueException $e){
             return $this->json([
@@ -66,7 +63,5 @@ class ApijsonController extends AbstractController
                 'message' => $e->getMessage()
             ], 400);
         }
-
-
     }
 }
