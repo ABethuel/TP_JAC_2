@@ -19,50 +19,44 @@ class Annonce
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"show_post"})
+     * @Groups({"post"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez saisir un titre")
-     * @Groups({"show_post"})
+     * @Groups({"post"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank(message="Veuillez saisir un contenu")
-     * @Groups({"show_post"})
+     * @Groups({"post"})
      */
     private $content;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez saisir une image")
-     * @Groups({"show_post"})
+     * @Groups({"post"})
      */
     private $image;
 
     /**
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank
-     * @Groups({"show_post"})
+     * @Groups({"post"})
      */
     private $date;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez saisir une catégorie")
-     * @Groups({"show_post"})
+     * @Groups({"post"})
      */
     private $category;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Type::class, inversedBy="annonce")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $type;
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="annonce", orphanRemoval=true)
@@ -135,18 +129,6 @@ class Annonce
     public function setCategory(string $category): self
     {
         $this->category = $category;
-
-        return $this;
-    }
-
-    public function getType(): ?Type
-    {
-        return $this->type;
-    }
-
-    public function setType(?Type $type): self
-    {
-        $this->type = $type;
 
         return $this;
     }

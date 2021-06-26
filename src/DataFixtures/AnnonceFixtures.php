@@ -16,44 +16,32 @@ class AnnonceFixtures extends Fixture
 
         $faker = Faker\Factory::create("fr_FR");
 
-        // Create 3 categories
-        for ($i=1; $i <= 3; $i++){
-            $type = new Type();
-            $type->setTitle($faker->sentence())
-                ->setDescription($faker->paragraph());
+        for ($j = 1; $j <= mt_rand(6,8); $j++){
+            $annonce = new Annonce();
 
-            $manager -> persist($type);
+            $annonce->setTitle($faker->sentence())
+                    ->setContent($faker->paragraph())
+                    ->setImage($faker->imageUrl())
+                    ->setCategory($faker->sentence())
+                    ->setDate($faker->dateTimeBetween('-6 months'));
 
-            // create post
+            $manager->persist($annonce);
 
-            for ($j = 1; $j <= mt_rand(4,8); $j++){
-                $annonce = new Annonce();
+            // Comments
+            for ($k = 1; $k <= mt_rand(4, 10); $k++){
+                $comment = new Comment();
 
-                $annonce->setTitle($faker->sentence())
+                $date = new \DateTime();
+                $interval = $date -> diff($annonce->getDate());
+                $days = $interval->days;
+                $min = '-' . $days . ' days';
+
+                $comment->setAuthor($faker->name)
                         ->setContent($faker->paragraph())
-                        ->setImage($faker->imageUrl())
-                        ->setCategory($type->getTitle())
-                        ->setDate($faker->dateTimeBetween('-6 months'))
-                        ->setType($type);
+                        ->setCreatedAt($faker->dateTimeBetween($min))
+                        ->setAnnonce($annonce);
 
-                $manager->persist($annonce);
-
-                // Comments
-                for ($k = 1; $k <= mt_rand(4, 10); $k++){
-                    $comment = new Comment();
-
-                    $date = new \DateTime();
-                    $interval = $date -> diff($annonce->getDate());
-                    $days = $interval->days;
-                    $min = '-' . $days . ' days';
-
-                    $comment->setAuthor($faker->name)
-                            ->setContent($faker->paragraph())
-                            ->setCreatedAt($faker->dateTimeBetween($min))
-                            ->setAnnonce($annonce);
-
-                    $manager->persist($comment);
-                }
+                $manager->persist($comment);
             }
         }
 

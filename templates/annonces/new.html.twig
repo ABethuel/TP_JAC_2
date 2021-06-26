@@ -6,7 +6,7 @@
 
     <br>
     <br>
-    
+
     <h1>
         {% if editMode %}
             Modifier une annonce
@@ -20,7 +20,7 @@
     {{ form_row(formAnnonce.title, {'attr' : {'placeholder': "Titre de l'article"}}) }}
     {{ form_row(formAnnonce.content, {'attr' : {'placeholder': "Contenu de l'article"}}) }}
     {{ form_row(formAnnonce.image, {'attr' : {'placeholder': "Image de l'article"}}) }}
-    {{ form_row(formAnnonce.type) }}
+    {{ form_row(formAnnonce.category, {'attr' : {'placeholder': "Catégorie de l'article"}}) }}
 
     <br>
     <br>

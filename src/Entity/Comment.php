@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
@@ -34,7 +35,6 @@ class Comment
 
     /**
      * @ORM\ManyToOne(targetEntity=Annonce::class, inversedBy="comments")
-     * @ORM\JoinColumn(nullable=false)
      */
     private $annonce;
 

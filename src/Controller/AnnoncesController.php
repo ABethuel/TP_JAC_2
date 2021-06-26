@@ -65,7 +65,6 @@ class AnnoncesController extends AbstractController
     /**
      * @Route("/show/{id}", name="show")
      * @param Annonce $annonce
-     * @param Request $request
      * @param EntityManagerInterface $manager
      * @return Response
      */

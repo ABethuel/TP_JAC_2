@@ -29,7 +29,6 @@ class ApijsonController extends AbstractController
         return $this->json($annonce, 200, [], ['groups' => 'show_post']);
     }
 
-
     /**
      * @Route("/json/create", name="create", methods={"POST"})
      * @param Request $request
