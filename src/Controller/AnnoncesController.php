@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Annonce;
+use App\Entity\Comment;
 use App\Form\AnnonceType;
+use App\Form\CommentType;
 use App\Repository\AnnonceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -66,13 +68,28 @@ class AnnoncesController extends AbstractController
      * @Route("/show/{id}", name="show")
      * @param Annonce $annonce
      * @param EntityManagerInterface $manager
+     * @param Request $request
      * @return Response
      */
-    public function show(Annonce $annonce, EntityManagerInterface $manager): Response
+    public function show(Annonce $annonce, EntityManagerInterface $manager, Request $request): Response
     {
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $comment->setCreatedAt(new \DateTime())
+                    ->setAnnonce($annonce);
+            $manager->persist($comment);
+            $manager->flush();
+
+            return $this->redirectToRoute('show', ['id' => $annonce->getId()]);
+        }
 
         return $this->render('annonces/show.html.twig', [
-            'annonce' => $annonce
+            'annonce' => $annonce,
+            'commentForm' => $form->createView()
         ]);
     }
 

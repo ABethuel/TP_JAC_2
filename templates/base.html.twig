@@ -25,6 +25,17 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path("new") }}">Ajouter une annonce</a>
                         </li>
+
+                        {% if not app.user %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path("security_login") }}">Connexion</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path("security_logout") }}">Deconnexion</a>
+                            </li>
+                        {% endif %}
+
                     </ul>
                 </div>
             </div>

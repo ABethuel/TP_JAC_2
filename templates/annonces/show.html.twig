@@ -1,4 +1,6 @@
 {% extends 'base.html.twig'%}
+{% form_theme commentForm 'bootstrap_4_layout.html.twig' %}
+
 
 {% block body %}
 
@@ -19,6 +21,7 @@
     <br>
 
     <section id="commentaires">
+        <h1>Section commentaires</h1>
         {% for comment in annonce.comments %}
         <div class="comment">
             <div class="row">
@@ -32,6 +35,15 @@
             <br>
         </div>
         {% endfor %}
+
+        {{ form_start(commentForm) }}
+        {{ form_row(commentForm.author, {'attr' : {'placeholder': "Votre nom"}}) }}
+        {{ form_row(commentForm.content, {'attr' : {'placeholder': "Contenu du commentaire"}}) }}
+        <br>
+        <div class="form_group">
+            <button type="submit" class="btn btn-success">Publier le commentaire</button>
+        </div>
+        {{ form_end(commentForm) }}
     </section>
 
 {% endblock %}
