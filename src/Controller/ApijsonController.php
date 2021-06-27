@@ -26,7 +26,7 @@ class ApijsonController extends AbstractController
     public function index(AnnonceRepository $annonceRepository): Response
     {
         $annonce = $annonceRepository->findAll();
-        return $this->json($annonce, 200, [], ['groups' => 'show_post']);
+        return $this->json($annonce, 200, [], ['groups' => 'post']);
     }
 
     /**
@@ -45,7 +45,7 @@ class ApijsonController extends AbstractController
             $annonce = $serializer->deserialize($jsonGet, Annonce::class, 'json');
             $annonce->setDate(new \DateTime());
 
-            $errors =$validator->validate($annonce);
+            $errors =  $validator->validate($annonce);
 
             if (count($errors) > 0) {
                 return $this->json($errors, 400);
@@ -54,7 +54,7 @@ class ApijsonController extends AbstractController
             $manager->persist($annonce);
             $manager->flush();
 
-            return $this->json($annonce, 201, [], ['groups' => 'show_post']);
+            return $this->json($annonce, 201, [], ['groups' => 'post']);
 
         } catch (NotEncodableValueException $e){
             return $this->json([
@@ -62,5 +62,23 @@ class ApijsonController extends AbstractController
                 'message' => $e->getMessage()
             ], 400);
         }
+    }
+
+    /**
+     * @Route("/json/delete/{id}", name="delete", methods={"DELETE"})
+     * @param Request $request
+     * @param SerializerInterface $serializer
+     * @param EntityManagerInterface $manager
+     * @param AnnonceRepository $annonceRepository
+     * @return JsonResponse
+     */
+    public function delete(Request $request, SerializerInterface $serializer, EntityManagerInterface $manager, AnnonceRepository $annonceRepository): JsonResponse
+    {
+        $annonce = $annonceRepository->find($request->get("id"));
+
+        $manager->remove($annonce);
+        $manager->flush();
+
+        return $this->json($annonce, 204, [], ['groups' => 'post']);
     }
 }

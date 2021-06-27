@@ -60,6 +60,7 @@ class Annonce
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="annonce", orphanRemoval=true)
+     * @Groups({"post"})
      */
      private $comments;
 

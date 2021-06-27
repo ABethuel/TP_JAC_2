@@ -15,21 +15,25 @@ class Comment
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"post"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"post"})
      */
     private $author;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"post"})
      */
     private $content;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"post"})
      */
     private $createdAt;
 

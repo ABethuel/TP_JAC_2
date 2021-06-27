@@ -84,7 +84,6 @@ class AnnoncesController extends AbstractController
      */
     public function delete(Annonce $annonce, EntityManagerInterface $manager): Response
     {
-
         $manager->remove($annonce);
         $manager->flush();
 
